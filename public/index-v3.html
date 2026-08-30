@@ -7,9 +7,7 @@
 <title>日韓機票雷達 V3</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 :root{
   --navy:#10243a;
@@ -24,17 +22,14 @@ body{
   margin:0;
   background:var(--bg);
   color:var(--navy);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  padding-bottom:100px;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;
+  padding-bottom:92px;
 }
 
 header{
   background:var(--navy);
   color:white;
-  padding:
-    calc(18px + env(safe-area-inset-top))
-    18px
-    22px;
+  padding:calc(18px + env(safe-area-inset-top)) 18px 20px;
 }
 
 .brand{
@@ -42,10 +37,10 @@ header{
   font-weight:900;
 }
 
-.subtitle{
-  margin-top:4px;
+.sub{
   font-size:13px;
-  opacity:.8;
+  opacity:.78;
+  margin-top:4px;
 }
 
 main{
@@ -55,13 +50,8 @@ main{
   padding:16px 12px;
 }
 
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
+.page{display:none}
+.page.active{display:block}
 
 h1{
   font-size:28px;
@@ -73,31 +63,33 @@ h2{
   margin:22px 0 10px;
 }
 
-.lead{
+.lead,.meta{
   color:var(--muted);
   line-height:1.5;
 }
 
+.meta{font-size:13px}
+
 .card{
   width:100%;
   max-width:100%;
-  overflow:hidden;
   background:var(--card);
   border:1px solid var(--line);
   border-radius:18px;
   padding:15px;
   margin:12px 0;
+  overflow:hidden;
 }
 
 .grid{
   display:grid;
-  grid-template-columns:
-    repeat(2,minmax(0,1fr));
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:12px;
 }
 
-.grid > div{
+.grid>div{
   min-width:0;
+  width:100%;
 }
 
 label{
@@ -123,9 +115,10 @@ input{
 }
 
 input[type="date"]{
-  width:100%;
-  min-width:0;
-  max-width:100%;
+  width:100% !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  font-size:14px;
 }
 
 .primary{
@@ -134,16 +127,16 @@ input[type="date"]{
   border-radius:13px;
   background:var(--green);
   color:white;
-  font-size:17px;
   font-weight:900;
+  font-size:17px;
   padding:15px;
   margin-top:14px;
 }
 
 .chips{
   display:flex;
-  gap:8px;
   flex-wrap:wrap;
+  gap:8px;
 }
 
 .chip{
@@ -151,56 +144,111 @@ input[type="date"]{
   background:white;
   color:var(--navy);
   border-radius:999px;
-  padding:10px 12px;
+  padding:9px 12px;
   font-weight:800;
 }
 
-@media(max-width:480px)
-  .grid > div{
-  width:100%;
-  min-width:0;
-  overflow:hidden;
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
 }
 
-input[type="date"]{
-  display:block;
-  width:100% !important;
-  min-width:0 !important;
-  max-width:100% !important;
-  font-size:14px;
-  padding-left:8px;
-  padding-right:8px;
+.city{
+  font-size:18px;
+  font-weight:900;
 }
+
+.price{
+  font-size:22px;
+  font-weight:900;
+  color:var(--green);
+}
+
+.badge{
+  display:inline-block;
+  font-size:11px;
+  background:#e6f6f4;
+  color:#087b76;
+  border-radius:999px;
+  padding:4px 7px;
+  margin-top:5px;
+  font-weight:800;
+}
+
+.bottom{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:20;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  background:rgba(255,255,255,.97);
+  border-top:1px solid var(--line);
+  padding:6px 4px calc(6px + env(safe-area-inset-bottom));
+}
+
+.nav{
+  border:0;
+  background:transparent;
+  color:#71808e;
+  font-size:11px;
+  font-weight:800;
+  padding:5px 0;
+}
+
+.nav.active{
+  color:var(--green);
+}
+
+.nav svg{
+  display:block;
+  width:30px;
+  height:30px;
+  margin:0 auto 3px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+@media(max-width:480px){
   .grid{
     grid-template-columns:1fr;
   }
 
-  main{
-    padding-left:12px;
-    padding-right:12px;
+  .grid>div{
+    width:100%;
+    min-width:0;
+    overflow:hidden;
   }
 
-  select,
-  input,
   input[type="date"]{
-    width:100%;
-    max-width:100%;
+    width:100% !important;
+    min-width:0 !important;
+    max-width:100% !important;
+    padding-left:8px;
+    padding-right:8px;
   }
 }
 </style>
 </head>
+
 <body>
 
 <header>
   <div class="brand">✈ 日韓機票雷達</div>
-  <div class="subtitle">V3 Demo・找出日本韓國甜甜價</div>
+  <div class="sub">V3 Demo・找出日本韓國甜甜價</div>
 </header>
 
 <main>
 
 <section id="home" class="page active">
   <h1>今天想飛哪裡？</h1>
-  <p class="lead">先看看目前 Demo 資料裡最便宜的日韓航點。</p>
+  <p class="lead">先看看 Demo 資料裡目前最便宜的日韓航點。</p>
 
   <div id="homeDeals"></div>
 
@@ -212,7 +260,7 @@ input[type="date"]{
 
 <section id="search" class="page">
   <h1>搜尋機票</h1>
-  <p class="lead">選擇日期、旅行天數與預算。</p>
+  <p class="lead">選好條件後，再按「找最低價」。</p>
 
   <div class="card">
 
@@ -294,11 +342,7 @@ input[type="date"]{
       style="margin-top:10px"
     >
 
-    <button
-      class="primary"
-      type="button"
-      onclick="searchFlights()"
-    >
+    <button class="primary" type="button" onclick="searchFlights()">
       找最低價
     </button>
 
@@ -308,7 +352,7 @@ input[type="date"]{
 
   <div id="results">
     <div class="card lead">
-      設定條件後按「找最低價」。
+      尚未搜尋。設定條件後按「找最低價」。
     </div>
   </div>
 </section>
@@ -323,7 +367,6 @@ input[type="date"]{
 
 <section id="tracking" class="page">
   <h1>追蹤</h1>
-  <p class="lead">設定你想等到的票價。</p>
 
   <div class="card">
     <label>目標價格</label>
@@ -335,11 +378,7 @@ input[type="date"]{
       placeholder="例如 6000"
     >
 
-    <button
-      class="primary"
-      type="button"
-      onclick="saveTrack()"
-    >
+    <button class="primary" type="button" onclick="saveTrack()">
       儲存價格追蹤
     </button>
   </div>
@@ -350,144 +389,100 @@ input[type="date"]{
 
 <section id="favorites" class="page">
   <h1>收藏</h1>
-  <p class="lead">你收藏的航點會保留在 Safari。</p>
   <div id="favoriteList"></div>
 </section>
 
 </main>
+
+
 <nav class="bottom">
 
-  <button
-    class="nav active"
-    data-page="home"
-    type="button"
-    onclick="showPage('home')"
-  >
-    <svg viewBox="0 0 24 24">
-      <path d="M3 11l9-7 9 7"/>
-      <path d="M5 10v10h14V10"/>
-      <path d="M9 20v-6h6v6"/>
-    </svg>
-    首頁
-  </button>
+<button class="nav active" data-page="home" onclick="showPage('home')">
+<svg viewBox="0 0 24 24">
+  <path d="M3 11l9-7 9 7"/>
+  <path d="M5 10v10h14V10"/>
+  <path d="M9 20v-6h6v6"/>
+</svg>
+首頁
+</button>
 
-  <button
-    class="nav"
-    data-page="search"
-    type="button"
-    onclick="showPage('search')"
-  >
-    <svg viewBox="0 0 24 24">
-      <circle cx="11" cy="11" r="7"/>
-      <path d="M16 16l5 5"/>
-    </svg>
-    搜尋
-  </button>
+<button class="nav" data-page="search" onclick="showPage('search')">
+<svg viewBox="0 0 24 24">
+  <circle cx="11" cy="11" r="7"/>
+  <path d="M16 16l5 5"/>
+</svg>
+搜尋
+</button>
 
-  <button
-    class="nav"
-    data-page="deals"
-    type="button"
-    onclick="showPage('deals')"
-  >
-    <svg viewBox="0 0 24 24">
-      <path d="M4 7h16l-2 10H6L4 7z"/>
-      <path d="M9 12h6"/>
-    </svg>
-    低價
-  </button>
+<button class="nav" data-page="deals" onclick="showPage('deals')">
+<svg viewBox="0 0 24 24">
+  <path d="M4 7h16l-2 10H6L4 7z"/>
+  <path d="M9 12h6"/>
+</svg>
+低價
+</button>
 
-  <button
-    class="nav"
-    data-page="tracking"
-    type="button"
-    onclick="showPage('tracking')"
-  >
-    <svg viewBox="0 0 24 24">
-      <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-      <path d="M10 21h4"/>
-    </svg>
-    追蹤
-  </button>
+<button class="nav" data-page="tracking" onclick="showPage('tracking')">
+<svg viewBox="0 0 24 24">
+  <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+  <path d="M10 21h4"/>
+</svg>
+追蹤
+</button>
 
-  <button
-    class="nav"
-    data-page="favorites"
-    type="button"
-    onclick="showPage('favorites')"
-  >
-    <svg viewBox="0 0 24 24">
-      <path d="M12 20s-8-4.5-8-10a4.5 4.5 0 0 1 8-3 4.5 4.5 0 0 1 8 3c0 5.5-8 10-8 10z"/>
-    </svg>
-    收藏
-  </button>
+<button class="nav" data-page="favorites" onclick="showPage('favorites')">
+<svg viewBox="0 0 24 24">
+  <path d="M12 20s-8-4.5-8-10a4.5 4.5 0 0 1 8-3 4.5 4.5 0 0 1 8 3c0 5.5-8 10-8 10z"/>
+</svg>
+收藏
+</button>
 
 </nav>
+
+
 <script>
 
 const deals = [
-  {id:1, code:"PUS", city:"釜山", airline:"釜山航空", price:3980},
-  {id:2, code:"FUK", city:"福岡", airline:"台灣虎航", price:4280},
-  {id:3, code:"OKA", city:"沖繩", airline:"樂桃航空", price:4580},
-  {id:4, code:"SEL", city:"首爾", airline:"濟州航空", price:4890},
-  {id:5, code:"OSA", city:"大阪", airline:"樂桃航空", price:5380},
-  {id:6, code:"TYO", city:"東京", airline:"酷航", price:5680},
-  {id:7, code:"CJU", city:"濟州", airline:"德威航空", price:5980},
-  {id:8, code:"CTS", city:"札幌", airline:"台灣虎航", price:7280}
+  {id:1,code:"PUS",city:"釜山",airline:"釜山航空",price:3980},
+  {id:2,code:"FUK",city:"福岡",airline:"台灣虎航",price:4280},
+  {id:3,code:"OKA",city:"沖繩",airline:"樂桃航空",price:4580},
+  {id:4,code:"SEL",city:"首爾",airline:"濟州航空",price:4890},
+  {id:5,code:"OSA",city:"大阪",airline:"樂桃航空",price:5380},
+  {id:6,code:"TYO",city:"東京",airline:"酷航",price:5680},
+  {id:7,code:"CJU",city:"濟州",airline:"德威航空",price:5980},
+  {id:8,code:"CTS",city:"札幌",airline:"台灣虎航",price:7280}
 ];
 
-const money = number =>
-  "NT$" + Number(number).toLocaleString("zh-TW");
+const money = n =>
+  "NT$" + Number(n).toLocaleString("zh-TW");
 
 
-function dealCard(deal, showFavorite = true) {
+function dealCard(d, showFav = true){
 
   return `
     <div class="card">
 
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        gap:12px;
-      ">
+      <div class="row">
 
         <div>
-          <div style="
-            font-size:18px;
-            font-weight:900;
-          ">
-            ${deal.city} · ${deal.code}
-          </div>
+          <div class="city">${d.city} · ${d.code}</div>
+          <div class="meta">${d.airline} · 來回 Demo 價</div>
 
-          <div class="meta">
-            ${deal.airline} · 來回 Demo 價
-          </div>
+          <span class="badge">
+            ${d.price <= 4500 ? "超級便宜" : d.price <= 5500 ? "很便宜" : "值得關注"}
+          </span>
         </div>
 
         <div style="text-align:right">
 
-          <div style="
-            font-size:22px;
-            font-weight:900;
-            color:#0e8d89;
-          ">
-            ${money(deal.price)}
+          <div class="price">
+            ${money(d.price)}
           </div>
 
           ${
-            showFavorite
-              ? `
-                <button
-                  class="chip"
-                  type="button"
-                  style="margin-top:7px"
-                  onclick="toggleFavorite(${deal.id})"
-                >
-                  ♡ 收藏
-                </button>
-              `
-              : ""
+            showFav
+            ? `<button class="chip" style="margin-top:7px" onclick="toggleFavorite(${d.id})">♡ 收藏</button>`
+            : ""
           }
 
         </div>
@@ -499,16 +494,16 @@ function dealCard(deal, showFavorite = true) {
 }
 
 
-function showPage(pageId) {
+function showPage(id){
 
   document
     .querySelectorAll(".page")
-    .forEach(page => {
-      page.classList.remove("active");
-    });
+    .forEach(page =>
+      page.classList.remove("active")
+    );
 
   document
-    .getElementById(pageId)
+    .getElementById(id)
     .classList.add("active");
 
   document
@@ -517,7 +512,7 @@ function showPage(pageId) {
 
       button.classList.toggle(
         "active",
-        button.dataset.page === pageId
+        button.dataset.page === id
       );
 
     });
@@ -527,28 +522,27 @@ function showPage(pageId) {
     behavior:"smooth"
   });
 
-  if (pageId === "favorites") {
+  if(id === "favorites"){
     renderFavorites();
   }
 
-  if (pageId === "tracking") {
+  if(id === "tracking"){
     renderTracking();
   }
 }
 
 
-function setBudget(amount) {
+function setBudget(amount){
 
-  const budget =
-    document.getElementById("budget");
-
-  budget.value = amount;
+  document
+    .getElementById("budget")
+    .value = amount;
 
   searchFlights();
 }
 
 
-function searchFlights() {
+function searchFlights(){
 
   const destination =
     document.getElementById("destination").value;
@@ -578,7 +572,7 @@ function searchFlights() {
     document.getElementById("results");
 
 
-  if (!start || !end) {
+  if(!start || !end){
 
     results.innerHTML = `
       <div class="card lead">
@@ -590,7 +584,7 @@ function searchFlights() {
   }
 
 
-  if (end < start) {
+  if(end < start){
 
     results.innerHTML = `
       <div class="card lead">
@@ -602,7 +596,7 @@ function searchFlights() {
   }
 
 
-  if (maxDays < minDays) {
+  if(maxDays < minDays){
 
     results.innerHTML = `
       <div class="card lead">
@@ -616,24 +610,25 @@ function searchFlights() {
 
   const filtered =
     deals
-      .filter(deal => {
+      .filter(d => {
 
         const destinationOK =
           destination === "ALL" ||
-          deal.code === destination;
+          d.code === destination;
 
-        const priceOK =
-          deal.price <= maximum;
+        const budgetOK =
+          d.price <= maximum;
 
-        return destinationOK && priceOK;
+        return destinationOK && budgetOK;
 
       })
       .sort(
-        (a,b) => a.price - b.price
+        (a,b) =>
+          a.price - b.price
       );
 
 
-  if (!filtered.length) {
+  if(!filtered.length){
 
     results.innerHTML = `
       <div class="card lead">
@@ -656,10 +651,9 @@ function searchFlights() {
       </div>
 
       <div style="
-        margin-top:8px;
+        margin-top:7px;
         color:#0e8d89;
         font-weight:900;
-        font-size:16px;
       ">
         🔥 這次搜尋最低價
         ${money(filtered[0].price)}
@@ -668,23 +662,23 @@ function searchFlights() {
     </div>
 
     ${filtered
-      .map(deal => dealCard(deal))
+      .map(d => dealCard(d))
       .join("")}
 
   `;
 }
 
 
-function getFavorites() {
+function getFavorites(){
 
-  try {
+  try{
 
     return JSON.parse(
       localStorage.getItem("flightRadarFavorites")
       || "[]"
     );
 
-  } catch {
+  }catch{
 
     return [];
 
@@ -692,12 +686,12 @@ function getFavorites() {
 }
 
 
-function toggleFavorite(id) {
+function toggleFavorite(id){
 
   let favorites =
     getFavorites();
 
-  if (favorites.includes(id)) {
+  if(favorites.includes(id)){
 
     favorites =
       favorites.filter(
@@ -706,7 +700,7 @@ function toggleFavorite(id) {
 
     alert("已取消收藏");
 
-  } else {
+  }else{
 
     favorites.push(id);
 
@@ -721,52 +715,45 @@ function toggleFavorite(id) {
 }
 
 
-function renderFavorites() {
+function renderFavorites(){
 
   const favorites =
     getFavorites();
 
   const selected =
     deals.filter(
-      deal =>
-        favorites.includes(deal.id)
+      d =>
+        favorites.includes(d.id)
     );
 
   const box =
     document.getElementById("favoriteList");
 
 
-  if (!selected.length) {
-
-    box.innerHTML = `
+  box.innerHTML =
+    selected.length
+    ? selected
+        .map(
+          d =>
+            dealCard(d,false)
+        )
+        .join("")
+    : `
       <div class="card lead">
         還沒有收藏。
-        到搜尋結果按「♡ 收藏」即可。
       </div>
     `;
-
-    return;
-  }
-
-
-  box.innerHTML =
-    selected
-      .map(
-        deal =>
-          dealCard(deal,false)
-      )
-      .join("");
 }
 
 
-function saveTrack() {
+function saveTrack(){
 
   const price =
     Number(
       document.getElementById("trackPrice").value
     );
 
-  if (!price) {
+  if(!price){
 
     alert("請輸入目標價格");
 
@@ -784,7 +771,7 @@ function saveTrack() {
 }
 
 
-function renderTracking() {
+function renderTracking(){
 
   const price =
     Number(
@@ -797,44 +784,23 @@ function renderTracking() {
     document.getElementById("trackList");
 
 
-  if (!price) {
-
-    box.innerHTML = `
+  box.innerHTML =
+    price
+    ? `
+      <div class="card">
+        <div class="meta">你的目標價格</div>
+        <div class="price">${money(price)}</div>
+      </div>
+    `
+    : `
       <div class="card lead">
         尚未設定價格追蹤。
       </div>
     `;
-
-    return;
-  }
-
-
-  box.innerHTML = `
-    <div class="card">
-
-      <div class="meta">
-        你的目標價格
-      </div>
-
-      <div style="
-        font-size:24px;
-        font-weight:900;
-        color:#0e8d89;
-        margin-top:5px;
-      ">
-        ${money(price)}
-      </div>
-
-      <div class="meta">
-        Demo 版目前先儲存在這支 iPhone。
-      </div>
-
-    </div>
-  `;
 }
 
 
-function initialize() {
+function initialize(){
 
   const now =
     new Date();
@@ -851,22 +817,20 @@ function initialize() {
       + 45 * 86400000
     );
 
-  const toDate =
-    date =>
-      date
-        .toISOString()
-        .slice(0,10);
+  const dateText =
+    d =>
+      d.toISOString().slice(0,10);
 
 
   document
     .getElementById("startDate")
     .value =
-      toDate(start);
+      dateText(start);
 
   document
     .getElementById("endDate")
     .value =
-      toDate(end);
+      dateText(end);
 
 
   document
@@ -875,8 +839,8 @@ function initialize() {
       deals
         .slice(0,3)
         .map(
-          deal =>
-            dealCard(deal)
+          d =>
+            dealCard(d)
         )
         .join("");
 
@@ -891,15 +855,19 @@ function initialize() {
             a.price - b.price
         )
         .map(
-          deal =>
-            dealCard(deal)
+          d =>
+            dealCard(d)
         )
         .join("");
-document.getElementById("results").innerHTML = `
-  <div class="card lead">
-    尚未搜尋。設定條件後按「找最低價」。
-  </div>
-`;
+
+
+  document
+    .getElementById("results")
+    .innerHTML = `
+      <div class="card lead">
+        尚未搜尋。設定條件後按「找最低價」。
+      </div>
+    `;
 }
 
 

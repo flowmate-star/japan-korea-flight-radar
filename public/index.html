@@ -7,6 +7,22 @@
 <title>日韓機票雷達</title>
 
 <style>
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .grid > div {
+    min-width: 0;
+  }
+
+  input[type="date"] {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    display: block;
+  }
+}
 *{box-sizing:border-box}
 :root{
   --navy:#10243a;
@@ -732,6 +748,9 @@ future.toISOString().slice(0,10);
 
 render();
 runSearch();
+function searchFlights() {
+  runSearch();
+}
 
 </script>
 

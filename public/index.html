@@ -280,53 +280,98 @@ select,input{
 
       <div>
         <label>出發地</label>
-        <select>
-          <option>桃園 TPE</option>
-          <option>松山 TSA</option>
-          <option>高雄 KHH</option>
+        <select id="searchOrigin">
+          <option value="TPE">桃園 TPE</option>
+          <option value="TSA">松山 TSA</option>
+          <option value="KHH">高雄 KHH</option>
         </select>
       </div>
 
       <div>
         <label>目的地</label>
-        <select id="dest">
+        <select id="searchDestination">
           <option value="ALL">日韓全部</option>
-          <option value="東京">東京</option>
-          <option value="大阪">大阪</option>
-          <option value="福岡">福岡</option>
-          <option value="沖繩">沖繩</option>
-          <option value="札幌">札幌</option>
-          <option value="首爾">首爾</option>
-          <option value="釜山">釜山</option>
-          <option value="濟州">濟州</option>
+          <option value="TYO">東京</option>
+          <option value="OSA">大阪</option>
+          <option value="FUK">福岡</option>
+          <option value="OKA">沖繩</option>
+          <option value="CTS">札幌</option>
+          <option value="SEL">首爾</option>
+          <option value="PUS">釜山</option>
+          <option value="CJU">濟州</option>
         </select>
       </div>
 
       <div>
-        <label>出發日期</label>
-        <input type="date" id="date">
+        <label>最早出發</label>
+        <input id="searchStart" type="date">
       </div>
 
       <div>
-        <label>預算上限</label>
-        <input type="number" id="budget" value="8000">
+        <label>最晚出發</label>
+        <input id="searchEnd" type="date">
+      </div>
+
+      <div>
+        <label>最少旅行天數</label>
+        <select id="minDays">
+          <option value="3">3 天</option>
+          <option value="4">4 天</option>
+          <option value="5" selected>5 天</option>
+          <option value="6">6 天</option>
+          <option value="7">7 天</option>
+        </select>
+      </div>
+
+      <div>
+        <label>最多旅行天數</label>
+        <select id="maxDays">
+          <option value="5">5 天</option>
+          <option value="6">6 天</option>
+          <option value="7" selected>7 天</option>
+          <option value="8">8 天</option>
+          <option value="9">9 天</option>
+          <option value="10">10 天</option>
+        </select>
       </div>
 
     </div>
 
-    <button class="primary" onclick="runSearch()">
+    <h2>預算上限</h2>
+
+    <div class="chips">
+      <button class="chip" type="button" onclick="setBudget(5000)">NT$5,000</button>
+      <button class="chip" type="button" onclick="setBudget(7000)">NT$7,000</button>
+      <button class="chip" type="button" onclick="setBudget(10000)">NT$10,000</button>
+      <button class="chip" type="button" onclick="setBudget(15000)">NT$15,000</button>
+    </div>
+
+    <input
+      id="budget"
+      type="number"
+      inputmode="numeric"
+      placeholder="自訂預算，例如 8000"
+    >
+
+    <button
+      class="primary"
+      type="button"
+      onclick="searchFlights()"
+      style="width:100%;margin-top:14px;"
+    >
       找最低價
     </button>
   </div>
 
-  <div class="chips">
-    <button class="chip" onclick="budget.value=5000;runSearch()">5,000 以下</button>
-    <button class="chip" onclick="budget.value=7000;runSearch()">7,000 以下</button>
-    <button class="chip" onclick="budget.value=10000;runSearch()">10,000 以下</button>
-  </div>
-
   <h2>搜尋結果</h2>
-  <div id="results"></div>
+
+  <div id="results">
+    <div class="card">
+      <p class="lead">
+        選擇出發地、目的地與日期後，按「找最低價」開始搜尋。
+      </p>
+    </div>
+  </div>
 </section>
 
 

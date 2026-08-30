@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+  <meta name="theme-color" content="#10213c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <title>日韓機票雷達</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f6f8fb;
+      color: #10213c;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "PingFang TC",
+        sans-serif;
+      padding-bottom: 90px;
+    }
+
+    header {
+      background: white;
+      padding:
+        calc(env(safe-area-inset-top) + 16px)
+        18px 14px;
+      border-bottom: 1px solid #e8edf3;
+    }
+
+    .brand {
+      font-size: 19px;
+      font-weight: 900;
+    }
+
+    .brand small {
+      display: block;
+      color: #738096;
+      font-size: 11px;
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    .hero {
+      padding: 26px 18px 10px;
+    }
+
+    .hero h1 {
+      font-size: 31px;
+      line-height: 1.2;
+      margin: 0 0 8px;
+    }
+
+    .hero p {
+      color: #738096;
+      margin: 0;
+    }
+
+    .card {
+      background: white;
+      margin: 14px 16px;
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid #e6ebf1;
+    }
+
+    .route {
+      display: grid;
+      grid-template-columns: 1fr 35px 1fr;
+      align-items: center;
+    }
+
+    label {
+      display: block;
+      font-size: 11px;
+      color: #738096;
+      margin-bottom: 6px;
+    }
+
+    select {
+      width: 100%;
+      border: 0;
+      background: white;
+      color: #10213c;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .arrow {
+      text-align: center;
+      font-size: 20px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .field {
+      border: 1px solid #e1e7ee;
+      border-radius: 12px;
+      padding: 11px;
+    }
+
+    .field select {
+      font-size: 14px;
+    }
+
+    .search {
+      width: 100%;
+      border: 0;
+      border-radius: 13px;
+      margin-top: 14px;
+      padding: 15px;
+      background:
+        linear-gradient(90deg,#ff5b55,#ef4777);
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .section {
+      padding: 8px 16px;
+    }
+
+    .section h2 {
+      margin-bottom: 4px;
+    }
+
+    .hint {
+      color: #738096;
+      font-size: 12px;
+    }
+
+    .deal {
+      background: white;
+      border: 1px solid #e6ebf1;
+      border-radius: 17px;
+      padding: 16px;
+      margin: 12px 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+
+    .deal h3 {
+      margin: 0 0 6px;
+      font-size: 19px;
+    }
+
+    .dates {
+      color: #738096;
+      font-size: 13px;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-top: 8px;
+      background: #e8fbf5;
+      color: #087d62;
+      padding: 5px 8px;
+      border-radius: 7px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .price {
+      color: #ff5264;
+      font-size: 22px;
+      font-weight: 900;
+      text-align: right;
+    }
+
+    .drop {
+      color: #087d62;
+      font-size: 11px;
+      margin-top: 5px;
+    }
+
+    .watch {
+      margin-top: 10px;
+      border: 0;
+      border-radius: 9px;
+      padding: 8px 10px;
+      background: #eef4f8;
+      color: #10213c;
+      font-weight: 700;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 30px;
+      color: #738096;
+    }
+
+    nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      display: grid;
+      grid-template-columns: repeat(5,1fr);
+
+      padding:
+        8px 8px
+        calc(env(safe-area-inset-bottom) + 8px);
+
+      background: rgba(255,255,255,.96);
+      border-top: 1px solid #e1e7ee;
+    }
+
+    nav div {
+      text-align: center;
+      color: #738096;
+      font-size: 10px;
+    }
+
+    nav b {
+      display: block;
+      color: #10213c;
+      font-size: 20px;
+      margin-bottom: 2px;
+    }
+
+    nav .active {
+      color: #10b58c;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    ✈️ 日韓機票雷達
+    <small>每天幫你找值得買的機票</small>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>
+    下一趟，<br>
+    去哪裡最便宜？
+  </h1>
+
+  <p>不用先決定城市，讓價格告訴你去哪裡。</p>
+</section>
+
+<div class="card">
+
+  <div class="route">
+
+    <div>
+      <label>從哪裡出發</label>
+
+      <select id="origin">
+        <option value="TPE">桃園 TPE</option>
+        <option value="TSA">松山 TSA</option>
+        <option value="KHH">高雄 KHH</option>
+      </select>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div>
+      <label>想去哪裡</label>
+
+      <select id="dest">
+        <option value="ALL">🇯🇵🇰🇷 日韓全部</option>
+        <option value="TYO">🇯🇵 東京</option>
+        <option value="OSA">🇯🇵 大阪</option>
+        <option value="FUK">🇯🇵 福岡</option>
+        <option value="OKA">🇯🇵 沖繩</option>
+        <option value="SEL">🇰🇷 首爾</option>
+        <option value="PUS">🇰🇷 釜山</option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="field">
+      <label>什麼時候</label>
+
+      <select>
+        <option>2026 年 12 月</option>
+        <option>2027 年 1 月</option>
+        <option>2027 年 2 月</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>玩幾天</label>
+
+      <select>
+        <option>5～7 天</option>
+        <option>3～4 天</option>
+        <option>8～10 天</option>
+      </select>
+    </div>
+
+  </div>
+
+  <button class="search" onclick="findDeals()">
+    🔥 幫我找便宜機票
+  </button>
+
+</div>
+
+<section class="section">
+
+  <h2>現在值得買 🔥</h2>
+
+  <div class="hint">
+    目前為 Demo 價格，先測試 iPhone 操作流程
+  </div>
+
+  <div id="deals"></div>
+
+</section>
+
+<nav>
+
+  <div class="active">
+    <b>⌂</b>
+    首頁
+  </div>
+
+  <div>
+    <b>⌕</b>
+    搜尋
+  </div>
+
+  <div>
+    <b>🔥</b>
+    低價
+  </div>
+
+  <div>
+    <b>🔔</b>
+    追蹤
+  </div>
+
+  <div>
+    <b>♡</b>
+    收藏
+  </div>
+
+</nav>
+
+<script>
+
+const money = number =>
+  "NT$" + Number(number).toLocaleString("zh-TW");
+
+async function findDeals() {
+
+  const box = document.querySelector("#deals");
+
+  box.innerHTML =
+    '<div class="loading">正在掃描便宜票… ✈️</div>';
+
+  try {
+
+    const response = await fetch("/api/deals", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        destination:
+          document.querySelector("#dest").value
+      })
+    });
+
+    const data = await response.json();
+
+    box.innerHTML = data.deals.map(deal => `
+
+      <article class="deal">
+
+        <div>
+
+          <h3>${deal.name}</h3>
+
+          <div class="dates">
+            ${deal.depart} → ${deal.return}
+          </div>
+
+          <span class="badge">
+            ★★★★★ ${deal.grade}
+          </span>
+
+          <br>
+
+          <button
+            class="watch"
+            onclick="alert('🔔 已加入價格追蹤 Demo')">
+            🔔 追蹤這張票
+          </button>
+
+        </div>
+
+        <div>
+
+          <div class="price">
+            ${money(deal.price)}
+          </div>
+
+          <div class="drop">
+            比近期平均 ↓${deal.drop}%
+          </div>
+
+        </div>
+
+      </article>
+
+    `).join("");
+
+  } catch (error) {
+
+    box.innerHTML =
+      '<div class="loading">目前無法取得票價，請稍後再試。</div>';
+
+  }
+
+}
+
+findDeals();
+
+</script>
+
+</body>
+</html>

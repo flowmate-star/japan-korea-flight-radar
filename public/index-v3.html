@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10243a">
+<title>日韓機票雷達 V3</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+:root{
+  --navy:#10243a;
+  --green:#0e8d89;
+  --bg:#f4f7f9;
+  --card:#ffffff;
+  --muted:#71808e;
+  --line:#dce5ea;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--navy);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  padding-bottom:100px;
+}
+
+header{
+  background:var(--navy);
+  color:white;
+  padding:
+    calc(18px + env(safe-area-inset-top))
+    18px
+    22px;
+}
+
+.brand{
+  font-size:22px;
+  font-weight:900;
+}
+
+.subtitle{
+  margin-top:4px;
+  font-size:13px;
+  opacity:.8;
+}
+
+main{
+  width:100%;
+  max-width:720px;
+  margin:auto;
+  padding:16px 12px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+h1{
+  font-size:28px;
+  margin:8px 0;
+}
+
+h2{
+  font-size:19px;
+  margin:22px 0 10px;
+}
+
+.lead{
+  color:var(--muted);
+  line-height:1.5;
+}
+
+.card{
+  width:100%;
+  max-width:100%;
+  overflow:hidden;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:15px;
+  margin:12px 0;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+
+.grid > div{
+  min-width:0;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  font-weight:800;
+  margin-bottom:6px;
+}
+
+select,
+input{
+  display:block;
+  width:100%;
+  min-width:0;
+  max-width:100%;
+  height:48px;
+  border:1px solid #cdd9df;
+  border-radius:12px;
+  background:white;
+  color:var(--navy);
+  padding:0 10px;
+  font-size:16px;
+}
+
+input[type="date"]{
+  width:100%;
+  min-width:0;
+  max-width:100%;
+}
+
+.primary{
+  width:100%;
+  border:0;
+  border-radius:13px;
+  background:var(--green);
+  color:white;
+  font-size:17px;
+  font-weight:900;
+  padding:15px;
+  margin-top:14px;
+}
+
+.chips{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.chip{
+  border:1px solid #cbd8df;
+  background:white;
+  color:var(--navy);
+  border-radius:999px;
+  padding:10px 12px;
+  font-weight:800;
+}
+
+@media(max-width:480px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  main{
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  select,
+  input,
+  input[type="date"]{
+    width:100%;
+    max-width:100%;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">✈ 日韓機票雷達</div>
+  <div class="subtitle">V3 Demo・找出日本韓國甜甜價</div>
+</header>
+
+<main>
+
+<section id="home" class="page active">
+  <h1>今天想飛哪裡？</h1>
+  <p class="lead">先看看目前 Demo 資料裡最便宜的日韓航點。</p>
+
+  <div id="homeDeals"></div>
+
+  <button class="primary" type="button" onclick="showPage('search')">
+    開始搜尋機票
+  </button>
+</section>
+
+
+<section id="search" class="page">
+  <h1>搜尋機票</h1>
+  <p class="lead">選擇日期、旅行天數與預算。</p>
+
+  <div class="card">
+
+    <div class="grid">
+
+      <div>
+        <label>出發地</label>
+        <select id="origin">
+          <option value="TPE">桃園 TPE</option>
+          <option value="TSA">松山 TSA</option>
+          <option value="KHH">高雄 KHH</option>
+        </select>
+      </div>
+
+      <div>
+        <label>目的地</label>
+        <select id="destination">
+          <option value="ALL">日韓全部</option>
+          <option value="TYO">東京</option>
+          <option value="OSA">大阪</option>
+          <option value="FUK">福岡</option>
+          <option value="OKA">沖繩</option>
+          <option value="CTS">札幌</option>
+          <option value="SEL">首爾</option>
+          <option value="PUS">釜山</option>
+          <option value="CJU">濟州</option>
+        </select>
+      </div>
+
+      <div>
+        <label>最早出發</label>
+        <input id="startDate" type="date">
+      </div>
+
+      <div>
+        <label>最晚出發</label>
+        <input id="endDate" type="date">
+      </div>
+
+      <div>
+        <label>最少旅行天數</label>
+        <select id="minDays">
+          <option value="3">3 天</option>
+          <option value="4">4 天</option>
+          <option value="5" selected>5 天</option>
+          <option value="6">6 天</option>
+          <option value="7">7 天</option>
+        </select>
+      </div>
+
+      <div>
+        <label>最多旅行天數</label>
+        <select id="maxDays">
+          <option value="5">5 天</option>
+          <option value="6">6 天</option>
+          <option value="7" selected>7 天</option>
+          <option value="8">8 天</option>
+          <option value="9">9 天</option>
+          <option value="10">10 天</option>
+        </select>
+      </div>
+
+    </div>
+
+    <h2>預算上限</h2>
+
+    <div class="chips">
+      <button class="chip" type="button" onclick="setBudget(5000)">NT$5,000</button>
+      <button class="chip" type="button" onclick="setBudget(7000)">NT$7,000</button>
+      <button class="chip" type="button" onclick="setBudget(9000)">NT$9,000</button>
+      <button class="chip" type="button" onclick="setBudget(12000)">NT$12,000</button>
+    </div>
+
+    <input
+      id="budget"
+      type="number"
+      inputmode="numeric"
+      placeholder="自訂預算，例如 8000"
+      style="margin-top:10px"
+    >
+
+    <button
+      class="primary"
+      type="button"
+      onclick="searchFlights()"
+    >
+      找最低價
+    </button>
+
+  </div>
+
+  <h2>搜尋結果</h2>
+
+  <div id="results">
+    <div class="card lead">
+      設定條件後按「找最低價」。
+    </div>
+  </div>
+</section>
+
+
+<section id="deals" class="page">
+  <h1>低價</h1>
+  <p class="lead">目前 Demo 資料的低價排行。</p>
+  <div id="dealList"></div>
+</section>
+
+
+<section id="tracking" class="page">
+  <h1>追蹤</h1>
+  <p class="lead">設定你想等到的票價。</p>
+
+  <div class="card">
+    <label>目標價格</label>
+
+    <input
+      id="trackPrice"
+      type="number"
+      inputmode="numeric"
+      placeholder="例如 6000"
+    >
+
+    <button
+      class="primary"
+      type="button"
+      onclick="saveTrack()"
+    >
+      儲存價格追蹤
+    </button>
+  </div>
+
+  <div id="trackList"></div>
+</section>
+
+
+<section id="favorites" class="page">
+  <h1>收藏</h1>
+  <p class="lead">你收藏的航點會保留在 Safari。</p>
+  <div id="favoriteList"></div>
+</section>
+
+</main>
+<nav class="bottom">
+
+  <button
+    class="nav active"
+    data-page="home"
+    type="button"
+    onclick="showPage('home')"
+  >
+    <svg viewBox="0 0 24 24">
+      <path d="M3 11l9-7 9 7"/>
+      <path d="M5 10v10h14V10"/>
+      <path d="M9 20v-6h6v6"/>
+    </svg>
+    首頁
+  </button>
+
+  <button
+    class="nav"
+    data-page="search"
+    type="button"
+    onclick="showPage('search')"
+  >
+    <svg viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="7"/>
+      <path d="M16 16l5 5"/>
+    </svg>
+    搜尋
+  </button>
+
+  <button
+    class="nav"
+    data-page="deals"
+    type="button"
+    onclick="showPage('deals')"
+  >
+    <svg viewBox="0 0 24 24">
+      <path d="M4 7h16l-2 10H6L4 7z"/>
+      <path d="M9 12h6"/>
+    </svg>
+    低價
+  </button>
+
+  <button
+    class="nav"
+    data-page="tracking"
+    type="button"
+    onclick="showPage('tracking')"
+  >
+    <svg viewBox="0 0 24 24">
+      <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+      <path d="M10 21h4"/>
+    </svg>
+    追蹤
+  </button>
+
+  <button
+    class="nav"
+    data-page="favorites"
+    type="button"
+    onclick="showPage('favorites')"
+  >
+    <svg viewBox="0 0 24 24">
+      <path d="M12 20s-8-4.5-8-10a4.5 4.5 0 0 1 8-3 4.5 4.5 0 0 1 8 3c0 5.5-8 10-8 10z"/>
+    </svg>
+    收藏
+  </button>
+
+</nav>
+<script>
+
+const deals = [
+  {id:1, code:"PUS", city:"釜山", airline:"釜山航空", price:3980},
+  {id:2, code:"FUK", city:"福岡", airline:"台灣虎航", price:4280},
+  {id:3, code:"OKA", city:"沖繩", airline:"樂桃航空", price:4580},
+  {id:4, code:"SEL", city:"首爾", airline:"濟州航空", price:4890},
+  {id:5, code:"OSA", city:"大阪", airline:"樂桃航空", price:5380},
+  {id:6, code:"TYO", city:"東京", airline:"酷航", price:5680},
+  {id:7, code:"CJU", city:"濟州", airline:"德威航空", price:5980},
+  {id:8, code:"CTS", city:"札幌", airline:"台灣虎航", price:7280}
+];
+
+const money = number =>
+  "NT$" + Number(number).toLocaleString("zh-TW");
+
+
+function dealCard(deal, showFavorite = true) {
+
+  return `
+    <div class="card">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:12px;
+      ">
+
+        <div>
+          <div style="
+            font-size:18px;
+            font-weight:900;
+          ">
+            ${deal.city} · ${deal.code}
+          </div>
+
+          <div class="meta">
+            ${deal.airline} · 來回 Demo 價
+          </div>
+        </div>
+
+        <div style="text-align:right">
+
+          <div style="
+            font-size:22px;
+            font-weight:900;
+            color:#0e8d89;
+          ">
+            ${money(deal.price)}
+          </div>
+
+          ${
+            showFavorite
+              ? `
+                <button
+                  class="chip"
+                  type="button"
+                  style="margin-top:7px"
+                  onclick="toggleFavorite(${deal.id})"
+                >
+                  ♡ 收藏
+                </button>
+              `
+              : ""
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+  `;
+}
+
+
+function showPage(pageId) {
+
+  document
+    .querySelectorAll(".page")
+    .forEach(page => {
+      page.classList.remove("active");
+    });
+
+  document
+    .getElementById(pageId)
+    .classList.add("active");
+
+  document
+    .querySelectorAll(".nav")
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.page === pageId
+      );
+
+    });
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+  if (pageId === "favorites") {
+    renderFavorites();
+  }
+
+  if (pageId === "tracking") {
+    renderTracking();
+  }
+}
+
+
+function setBudget(amount) {
+
+  const budget =
+    document.getElementById("budget");
+
+  budget.value = amount;
+
+  searchFlights();
+}
+
+
+function searchFlights() {
+
+  const destination =
+    document.getElementById("destination").value;
+
+  const maximum =
+    Number(
+      document.getElementById("budget").value
+    ) || 999999;
+
+  const start =
+    document.getElementById("startDate").value;
+
+  const end =
+    document.getElementById("endDate").value;
+
+  const minDays =
+    Number(
+      document.getElementById("minDays").value
+    );
+
+  const maxDays =
+    Number(
+      document.getElementById("maxDays").value
+    );
+
+  const results =
+    document.getElementById("results");
+
+
+  if (!start || !end) {
+
+    results.innerHTML = `
+      <div class="card lead">
+        請先選擇最早出發與最晚出發日期。
+      </div>
+    `;
+
+    return;
+  }
+
+
+  if (end < start) {
+
+    results.innerHTML = `
+      <div class="card lead">
+        最晚出發日期不能早於最早出發日期。
+      </div>
+    `;
+
+    return;
+  }
+
+
+  if (maxDays < minDays) {
+
+    results.innerHTML = `
+      <div class="card lead">
+        最多旅行天數不能少於最少旅行天數。
+      </div>
+    `;
+
+    return;
+  }
+
+
+  const filtered =
+    deals
+      .filter(deal => {
+
+        const destinationOK =
+          destination === "ALL" ||
+          deal.code === destination;
+
+        const priceOK =
+          deal.price <= maximum;
+
+        return destinationOK && priceOK;
+
+      })
+      .sort(
+        (a,b) => a.price - b.price
+      );
+
+
+  if (!filtered.length) {
+
+    results.innerHTML = `
+      <div class="card lead">
+        目前沒有符合條件的 Demo 機票。
+        可以提高預算或更換目的地。
+      </div>
+    `;
+
+    return;
+  }
+
+
+  results.innerHTML = `
+
+    <div class="card">
+
+      <div class="meta">
+        ${start} ～ ${end}
+        · ${minDays}～${maxDays} 天
+      </div>
+
+      <div style="
+        margin-top:8px;
+        color:#0e8d89;
+        font-weight:900;
+        font-size:16px;
+      ">
+        🔥 這次搜尋最低價
+        ${money(filtered[0].price)}
+      </div>
+
+    </div>
+
+    ${filtered
+      .map(deal => dealCard(deal))
+      .join("")}
+
+  `;
+}
+
+
+function getFavorites() {
+
+  try {
+
+    return JSON.parse(
+      localStorage.getItem("flightRadarFavorites")
+      || "[]"
+    );
+
+  } catch {
+
+    return [];
+
+  }
+}
+
+
+function toggleFavorite(id) {
+
+  let favorites =
+    getFavorites();
+
+  if (favorites.includes(id)) {
+
+    favorites =
+      favorites.filter(
+        item => item !== id
+      );
+
+    alert("已取消收藏");
+
+  } else {
+
+    favorites.push(id);
+
+    alert("已加入收藏");
+
+  }
+
+  localStorage.setItem(
+    "flightRadarFavorites",
+    JSON.stringify(favorites)
+  );
+}
+
+
+function renderFavorites() {
+
+  const favorites =
+    getFavorites();
+
+  const selected =
+    deals.filter(
+      deal =>
+        favorites.includes(deal.id)
+    );
+
+  const box =
+    document.getElementById("favoriteList");
+
+
+  if (!selected.length) {
+
+    box.innerHTML = `
+      <div class="card lead">
+        還沒有收藏。
+        到搜尋結果按「♡ 收藏」即可。
+      </div>
+    `;
+
+    return;
+  }
+
+
+  box.innerHTML =
+    selected
+      .map(
+        deal =>
+          dealCard(deal,false)
+      )
+      .join("");
+}
+
+
+function saveTrack() {
+
+  const price =
+    Number(
+      document.getElementById("trackPrice").value
+    );
+
+  if (!price) {
+
+    alert("請輸入目標價格");
+
+    return;
+  }
+
+  localStorage.setItem(
+    "flightRadarTrackPrice",
+    String(price)
+  );
+
+  renderTracking();
+
+  alert("價格追蹤已儲存");
+}
+
+
+function renderTracking() {
+
+  const price =
+    Number(
+      localStorage.getItem(
+        "flightRadarTrackPrice"
+      )
+    );
+
+  const box =
+    document.getElementById("trackList");
+
+
+  if (!price) {
+
+    box.innerHTML = `
+      <div class="card lead">
+        尚未設定價格追蹤。
+      </div>
+    `;
+
+    return;
+  }
+
+
+  box.innerHTML = `
+    <div class="card">
+
+      <div class="meta">
+        你的目標價格
+      </div>
+
+      <div style="
+        font-size:24px;
+        font-weight:900;
+        color:#0e8d89;
+        margin-top:5px;
+      ">
+        ${money(price)}
+      </div>
+
+      <div class="meta">
+        Demo 版目前先儲存在這支 iPhone。
+      </div>
+
+    </div>
+  `;
+}
+
+
+function initialize() {
+
+  const now =
+    new Date();
+
+  const start =
+    new Date(
+      now.getTime()
+      + 14 * 86400000
+    );
+
+  const end =
+    new Date(
+      now.getTime()
+      + 45 * 86400000
+    );
+
+  const toDate =
+    date =>
+      date
+        .toISOString()
+        .slice(0,10);
+
+
+  document
+    .getElementById("startDate")
+    .value =
+      toDate(start);
+
+  document
+    .getElementById("endDate")
+    .value =
+      toDate(end);
+
+
+  document
+    .getElementById("homeDeals")
+    .innerHTML =
+      deals
+        .slice(0,3)
+        .map(
+          deal =>
+            dealCard(deal)
+        )
+        .join("");
+
+
+  document
+    .getElementById("dealList")
+    .innerHTML =
+      deals
+        .slice()
+        .sort(
+          (a,b) =>
+            a.price - b.price
+        )
+        .map(
+          deal =>
+            dealCard(deal)
+        )
+        .join("");
+
+}
+
+
+initialize();
+
+</script>
+
+</body>
+</html>

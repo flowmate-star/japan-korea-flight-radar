@@ -155,7 +155,22 @@ input[type="date"]{
   font-weight:800;
 }
 
-@media(max-width:480px){
+@media(max-width:480px)
+  .grid > div{
+  width:100%;
+  min-width:0;
+  overflow:hidden;
+}
+
+input[type="date"]{
+  display:block;
+  width:100% !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  font-size:14px;
+  padding-left:8px;
+  padding-right:8px;
+}
   .grid{
     grid-template-columns:1fr;
   }
@@ -880,7 +895,11 @@ function initialize() {
             dealCard(deal)
         )
         .join("");
-
+document.getElementById("results").innerHTML = `
+  <div class="card lead">
+    尚未搜尋。設定條件後按「找最低價」。
+  </div>
+`;
 }
 
 
